@@ -1,0 +1,71 @@
+{
+  "name": "utags-utils",
+  "version": "0.0.3",
+  "description": "Common utility functions for utags and utags-bookmarks",
+  "type": "module",
+  "main": "./lib/index.ts",
+  "exports": {
+    ".": "./lib/index.ts"
+  },
+  "scripts": {
+    "p": "prettier --write .",
+    "lint": "prettier --write . && xo --fix && tsc --noemit",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "author": "Pipecraft",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/utags/utags-utils/issues"
+  },
+  "homepage": "https://github.com/utags/utags-utils#readme",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@types/chrome": "^0.0.309",
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "prettier": "^3.5.3",
+    "ts-jest": "^29.2.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.2.2",
+    "xo": "^0.60.0"
+  },
+  "files": [
+    "lib/",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "xo": {
+    "space": 2,
+    "prettier": true,
+    "envs": [
+      "browser",
+      "webextensions"
+    ],
+    "rules": {
+      "capitalized-comments": 0
+    },
+    "overrides": [
+      {
+        "files": [
+          "jest.config.mjs"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": 0
+        }
+      },
+      {
+        "files": [
+          "jest.setup.ts"
+        ],
+        "rules": {
+          "import/no-unassigned-import": 0
+        }
+      }
+    ]
+  }
+}
