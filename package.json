@@ -10,8 +10,8 @@
   "scripts": {
     "p": "prettier --write .",
     "lint": "prettier --write . && xo --fix && tsc --noemit",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "jest --verbose",
+    "test:watch": "jest --verbose --watch"
   },
   "author": "Pipecraft",
   "license": "MIT",
