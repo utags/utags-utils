@@ -168,4 +168,67 @@ describe('splitTags', () => {
       'Angular JS',
     ])
   })
+
+  test('should handle array input', () => {
+    expect(splitTags(['tag1', 'tag2', 'tag3'])).toEqual([
+      'tag1',
+      'tag2',
+      'tag3',
+    ])
+    expect(splitTags(['tag1', ' tag2 ', 'tag1'])).toEqual(['tag1', 'tag2'])
+    expect(splitTags(['  tag with spaces  ', 'another,tag', ''])).toEqual([
+      'tag with spaces',
+      'another',
+      'tag',
+    ])
+    expect(splitTags(['abc', 'with, comma', 'efg'])).toEqual([
+      'abc',
+      'with',
+      'comma',
+      'efg',
+    ])
+    expect(
+      splitTags([
+        ' leading space',
+        'trailing space ',
+        ' duplicate ',
+        ' duplicate ',
+      ])
+    ).toEqual(['leading space', 'trailing space', 'duplicate'])
+    expect(splitTags([])).toEqual([])
+    expect(splitTags(['', '   ', ','])).toEqual([])
+  })
+
+  test('should handle Set input', () => {
+    expect(splitTags(new Set(['tag1', 'tag2', 'tag3']))).toEqual([
+      'tag1',
+      'tag2',
+      'tag3',
+    ])
+    expect(splitTags(new Set(['tag1', ' tag2 ', 'tag1']))).toEqual([
+      'tag1',
+      'tag2',
+    ])
+    expect(
+      splitTags(new Set(['  tag with spaces  ', 'another,tag', '']))
+    ).toEqual(['tag with spaces', 'another', 'tag'])
+    expect(splitTags(new Set(['abc', 'with, comma', 'efg']))).toEqual([
+      'abc',
+      'with',
+      'comma',
+      'efg',
+    ])
+    expect(
+      splitTags(
+        new Set([
+          ' leading space',
+          'trailing space ',
+          ' duplicate ',
+          ' duplicate ',
+        ])
+      )
+    ).toEqual(['leading space', 'trailing space', 'duplicate'])
+    expect(splitTags(new Set([]))).toEqual([])
+    expect(splitTags(new Set(['', '   ', ',']))).toEqual([])
+  })
 })
