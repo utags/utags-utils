@@ -1,4 +1,4 @@
-export { isValidDate, normalizeCreated, normalizeUpdated } from './date.js'
+export { isValidDate, normalizeCreated, normalizeUpdated } from './date'
 
 /**
  * Trims and normalizes whitespace in a string

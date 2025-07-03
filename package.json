@@ -47,6 +47,8 @@
       "webextensions"
     ],
     "rules": {
+      "import/extensions": 0,
+      "n/file-extension-in-import": 0,
       "capitalized-comments": 0
     },
     "overrides": [
