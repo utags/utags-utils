@@ -1,3 +1,5 @@
+export { isValidDate, normalizeCreated, normalizeUpdated } from './date.js'
+
 /**
  * Trims and normalizes whitespace in a string
  * @param title - The input string to be processed, can be undefined
