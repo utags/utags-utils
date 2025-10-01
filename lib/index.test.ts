@@ -44,6 +44,45 @@ describe('trimTitle', () => {
     expect(trimTitle('\n你好\t世界\r')).toBe('你好 世界')
     expect(trimTitle('你好    世界')).toBe('你好 世界')
   })
+
+  test('should handle invisible Unicode characters', () => {
+    // Zero-width space (U+200B)
+    expect(trimTitle('hello\u200Bworld')).toBe('hello world')
+    // Zero-width non-joiner (U+200C)
+    expect(trimTitle('hello\u200Cworld')).toBe('hello world')
+    // Zero-width joiner (U+200D)
+    expect(trimTitle('hello\u200Dworld')).toBe('hello world')
+    // Word joiner (U+2060)
+    expect(trimTitle('hello\u2060world')).toBe('hello world')
+    // Byte order mark/zero-width no-break space (U+FEFF)
+    expect(trimTitle('hello\uFEFFworld')).toBe('hello world')
+    // Bidirectional text marks (U+2066 to U+2069)
+    expect(trimTitle('hello\u2066world')).toBe('hello world')
+    expect(trimTitle('hello\u2067world')).toBe('hello world')
+    expect(trimTitle('hello\u2068world')).toBe('hello world')
+    expect(trimTitle('hello\u2069world')).toBe('hello world')
+    // Arabic letter mark (U+061C)
+    expect(trimTitle('hello\u061Cworld')).toBe('hello world')
+    // Bidirectional formatting characters (U+202A to U+202E)
+    expect(trimTitle('hello\u202Aworld')).toBe('hello world')
+    expect(trimTitle('hello\u202Bworld')).toBe('hello world')
+    expect(trimTitle('hello\u202Cworld')).toBe('hello world')
+    expect(trimTitle('hello\u202Dworld')).toBe('hello world')
+    expect(trimTitle('hello\u202Eworld')).toBe('hello world')
+  })
+
+  test('should handle multiple invisible characters together', () => {
+    expect(trimTitle('hello\u200B\u200C\u200D\u2060world')).toBe('hello world')
+    expect(trimTitle('\u200Bhello\u200Cworld\u200D')).toBe('hello world')
+    expect(trimTitle('hello\u200B\u200B\u200Bworld')).toBe('hello world')
+    expect(trimTitle('hello\u200B \u200Cworld')).toBe('hello world')
+  })
+
+  test('should handle mixed visible and invisible characters', () => {
+    expect(trimTitle('  hello\u200B\tworld\u200C  ')).toBe('hello world')
+    expect(trimTitle('\nhello\u200D\r\nworld\u2060\t')).toBe('hello world')
+    expect(trimTitle('你好\u200B世界\u200C')).toBe('你好 世界')
+  })
 })
 
 describe('getTrimmedTitle', () => {

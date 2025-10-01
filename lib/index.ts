@@ -1,14 +1,33 @@
 export { isValidDate, normalizeCreated, normalizeUpdated } from './date'
 
 /**
- * Trims and normalizes whitespace in a string
+ * Trims and normalizes whitespace and invisible characters in a string
  * @param title - The input string to be processed, can be undefined
  * @returns A string with normalized whitespace or empty string if input is undefined
+ *
+ * Handles the following invisible characters:
+ * - Standard whitespace (\s: spaces, tabs, line breaks)
+ * - Zero-width spaces (U+200B)
+ * - Zero-width non-joiners (U+200C)
+ * - Zero-width joiners (U+200D)
+ * - Word joiners (U+2060)
+ * - Byte order marks/zero-width no-break spaces (U+FEFF)
+ * - Bidirectional text marks (U+2066 to U+2069)
+ * - And other similar invisible Unicode characters
  */
 // eslint-disable-next-line @typescript-eslint/ban-types
 export function trimTitle(title: string | undefined | null): string {
   if (!title) return ''
-  return title.replaceAll(/\s+/gm, ' ').trim()
+  return (
+    title
+      // To resolve eslint error - no-misleading-character-class
+      .replaceAll('\u200D', ' ')
+      .replaceAll(
+        /[\s\u200B\u200C\u2060\uFEFF\u2066\u2067\u2068\u2069\u061C\u202A\u202B\u202C\u202D\u202E]+/gm,
+        ' '
+      )
+      .trim()
+  )
 }
 
 /**
